@@ -28,3 +28,8 @@ composer install
 - `atom-workspace preset:create "mypreset"`
 - `atom-workspace preset:workspace:create "mypreset" $X $Y $PROJECT_PATH`  with `$X` and `$Y` the positions of the workspaces [0,0], [0,1], [2,2] etc.. , and `$PROJECT_PATH` the absolute path of your project to launch.
 - `atom-workspace preset:load "mypreset"` will open `xterm` in any of your registered workspaces and launch an atom window. 
+
+
+## LICENSE
+
+MIT License.
