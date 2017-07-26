@@ -15,6 +15,8 @@ class WindowManager
     $this->height = null;
     $this->screenWidth = null;
     $this->screenHeight = null;
+    $this->vpX = null;
+    $this->vpY = null;
   }
   
   public function goto($x, $y)
@@ -27,15 +29,11 @@ class WindowManager
   
   public function moveTo($x, $y, $WID)
   {
-    $X = $x * $this->screenWidth;
-    $Y = $y * $this->screenHeight;
-    
-    sleep(2);
-    
-    exec("wmctrl -i -r $WID -e 0,$X,$Y,600,600");
-    
-    var_dump("wmctrl -i -r $WID -e 0,$X,$Y,600,600");
-    
+    $X = $x * $this->screenWidth - $this->vpX;
+    $Y = $y * $this->screenHeight - $this->vpY;
+
+    exec("wmctrl -i -r $WID -e 0,$X,$Y,-1,-1");
+      
   }
   
   public function fetchSize()
@@ -48,13 +46,16 @@ class WindowManager
     
     $line = $lines[0];
     
-    $pattern = "[^ ]* +[^ ]* +[^ ]* +(\d+)x(\d+) +[^ ]* +\d+,\d+ +[^ ]* (\d+),(\d+) *(\d+)x(\d+)";
+    $pattern = "[^ ]* +[^ ]* +[^ ]* +(\d+)x(\d+) +[^ ]* +(\d+),(\d+) +[^ ]* (\d+),(\d+) *(\d+)x(\d+)";
     preg_match("/" . $pattern . "/", $line, $matches);
     
     $this->width = $matches[1];
     $this->height = $matches[2];
-    $this->screenWidth = $matches[3] + $matches[5];
-    $this->screenHeight = $matches[4] + $matches[6];
+    $this->vpX = $matches[3];
+    $this->vpY = $matches[4];
+    $this->screenWidth = $matches[5] + $matches[7];
+    $this->screenHeight = $matches[6] + $matches[8];
+    
     
     //var_dump($matches);
     
