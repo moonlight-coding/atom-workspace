@@ -41,13 +41,14 @@ class WindowManager
     $X = $x * $this->screenWidth - $this->vpX + $this->offsetX;
     $Y = $y * $this->screenHeight - $this->vpY + $this->offsetY;
 
-    $cmd = "wmctrl -i -r $WID -e 0,$X,$Y,-1,-1";
+    //$cmd = "wmctrl -i -r $WID -e 0,$X,$Y,-1,-1";
+    $cmd = "xdotool windowmove $WID $X $Y";
     
     exec($cmd);
     
     echo $cmd, "\n";  
     
-    $this->dump();
+    //$this->dump();
   }
   
   public function dump()
