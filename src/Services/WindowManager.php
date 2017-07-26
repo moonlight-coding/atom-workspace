@@ -33,6 +33,9 @@ class WindowManager
     sleep(2);
     
     exec("wmctrl -i -r $WID -e 0,$X,$Y,600,600");
+    
+    var_dump("wmctrl -i -r $WID -e 0,$X,$Y,600,600");
+    
   }
   
   public function fetchSize()
