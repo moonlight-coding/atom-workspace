@@ -31,6 +31,8 @@ class WindowManager
     $Y = $y * $this->screenHeight;
     
     exec("wmctrl -o $X,$Y");
+    
+    echo "GOTO $X,$Y: $y\n";
   }
   
   public function moveTo($x, $y, $WID)
@@ -41,14 +43,21 @@ class WindowManager
     $X = $x * $this->screenWidth - $this->vpX + $this->offsetX;
     $Y = $y * $this->screenHeight - $this->vpY + $this->offsetY;
 
+    if($y == 0) {
+      $Y += 50;
+    }
+
     //$cmd = "wmctrl -i -r $WID -e 0,$X,$Y,-1,-1";
+    
     $cmd = "xdotool windowmove $WID $X $Y";
-    
     exec($cmd);
+    echo $cmd, "\n";
     
-    echo $cmd, "\n";  
-    
-    //$this->dump();
+    echo "====> supposed\n";
+    $this->dump();
+    echo "====> corrected\n";
+    $this->fetchSize();
+    $this->dump();
   }
   
   public function dump()
@@ -104,7 +113,7 @@ class WindowManager
       $pattern = "^0x([\da-f]+).* — (.*) — Atom";
       preg_match("/" . $pattern . "/", $line, $matches);
       
-      if(count($matches)) {
+      if(count($matches) > 0) {
         
         $PID = '0x' . $matches[1];
         $match_path = $matches[2];
