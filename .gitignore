@@ -1,0 +1,5 @@
+/vendor/
+/context/*
+!/context/.gitkeep
+/atom-workspace.phar
+
