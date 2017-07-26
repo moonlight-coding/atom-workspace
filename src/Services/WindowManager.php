@@ -8,6 +8,10 @@ class WindowManager
   protected $height;
   protected $screenWidth;
   protected $screenHeight;
+  protected $vpX;
+  protected $vpY;
+  protected $offsetX;
+  protected $offsetY;
   
   public function __construct()
   {
@@ -17,6 +21,8 @@ class WindowManager
     $this->screenHeight = null;
     $this->vpX = null;
     $this->vpY = null;
+    $this->offsetX = null;
+    $this->offsetY = null;
   }
   
   public function goto($x, $y)
@@ -29,11 +35,31 @@ class WindowManager
   
   public function moveTo($x, $y, $WID)
   {
-    $X = $x * $this->screenWidth - $this->vpX;
-    $Y = $y * $this->screenHeight - $this->vpY;
+    echo "vpX: {$this->vpX}, vpY: {$this->vpY}\n";
+    $this->goto($this->vpX, $this->vpY);
+    
+    $X = $x * $this->screenWidth - $this->vpX + $this->offsetX;
+    $Y = $y * $this->screenHeight - $this->vpY + $this->offsetY;
 
-    exec("wmctrl -i -r $WID -e 0,$X,$Y,-1,-1");
-      
+    $cmd = "wmctrl -i -r $WID -e 0,$X,$Y,-1,-1";
+    
+    exec($cmd);
+    
+    echo $cmd, "\n";  
+    
+    $this->dump();
+  }
+  
+  public function dump()
+  {
+    echo "width: ", $this->width, "\n";
+    echo "height: ", $this->height, "\n";
+    echo "screenWidth: ", $this->screenWidth, "\n";
+    echo "screenHeight: ", $this->screenHeight, "\n";
+    echo "vpX: ", $this->vpX, "\n";
+    echo "vpY: ", $this->vpY, "\n";
+    echo "offsetX: ", $this->offsetX, "\n";
+    echo "offsetY: ", $this->offsetY, "\n";
   }
   
   public function fetchSize()
@@ -53,6 +79,8 @@ class WindowManager
     $this->height = $matches[2];
     $this->vpX = $matches[3];
     $this->vpY = $matches[4];
+    $this->offsetX = $matches[5];
+    $this->offsetY = $matches[6];
     $this->screenWidth = $matches[5] + $matches[7];
     $this->screenHeight = $matches[6] + $matches[8];
     
@@ -72,7 +100,7 @@ class WindowManager
     
     foreach($lines as $line)
     {
-      $pattern = "^0x(\d+).* — (.*) — Atom";
+      $pattern = "^0x([\da-f]+).* — (.*) — Atom";
       preg_match("/" . $pattern . "/", $line, $matches);
       
       if(count($matches)) {
@@ -112,5 +140,15 @@ class WindowManager
   public function getScreenHeight()
   {
     return $this->screenHeight;
+  }
+  
+  public function getViewportX()
+  {
+    return $this->vpX;
+  }
+  
+  public function getViewportY()
+  {
+    return $this->vpY;
   }
 }

@@ -41,7 +41,9 @@ class Load extends Command
       
       exec("screen -dm sh -c \"$cmd\"", $lines, $ret);
       
-      sleep(2);
+      sleep(3);
+      
+      $wm->goto($wm->getViewportX(), $wm->getViewportY());
       
       if($ret != 0) {
         throw new \Exception("please install 'screen' command");

@@ -64,7 +64,7 @@ class Config
   
   public function save()
   {
-    file_put_contents($this->getFilename(), json_encode($this->conf, JSON_PRETTY_PRINT));
+    file_put_contents($this->getFilename(), json_encode($this->conf, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
   }
   
   
