@@ -41,7 +41,8 @@ class Load extends Command
         //Window on $path already opened
       } 
       else {
-        $cmd = "xterm -e 'cd $path;atom .;bash'";
+        
+        $cmd = "xterm -maximized -e 'cd $path;atom .;bash'";
         
         exec("screen -dm sh -c \"$cmd\"", $lines, $ret);
       

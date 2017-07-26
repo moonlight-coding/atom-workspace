@@ -26,6 +26,7 @@ Tested on Ubuntu 16.04 with Unity.
 ```
 composer install
 ./build.sh
+sudo ./install.sh
 ```
 
 ## How to use

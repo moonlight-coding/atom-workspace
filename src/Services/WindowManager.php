@@ -32,12 +32,12 @@ class WindowManager
     
     exec("wmctrl -o $X,$Y");
     
-    echo "GOTO $X,$Y: $y\n";
+    //echo "GOTO $X,$Y: $y\n";
   }
   
   public function moveTo($x, $y, $WID)
   {
-    echo "vpX: {$this->vpX}, vpY: {$this->vpY}\n";
+    //echo "vpX: {$this->vpX}, vpY: {$this->vpY}\n";
     $this->goto($this->vpX, $this->vpY);
     
     $X = $x * $this->screenWidth - $this->vpX + $this->offsetX;
@@ -51,13 +51,6 @@ class WindowManager
     
     $cmd = "xdotool windowmove $WID $X $Y";
     exec($cmd);
-    echo $cmd, "\n";
-    
-    echo "====> supposed\n";
-    $this->dump();
-    echo "====> corrected\n";
-    $this->fetchSize();
-    $this->dump();
   }
   
   public function dump()
@@ -160,5 +153,15 @@ class WindowManager
   public function getViewportY()
   {
     return $this->vpY;
+  }
+  
+  public function getOffsetX()
+  {
+    return $this->offsetX;
+  }
+  
+  public function getOffsetY()
+  {
+    return $this->offsetY;
   }
 }
