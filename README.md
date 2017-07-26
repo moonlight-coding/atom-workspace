@@ -1,12 +1,5 @@
 # atom-workspace
 
-Doesn't work yet correctly, currently it can place atom windows in workspaces with y > 0, due to a bug in wmctrl.
-
-TODO before considered "stable":
-
-- need a way to detect an atom window has been opened (`sleep 3` is not always enough).
-- fix the problem with wmctrl.
-
 ## Purpose
 
 The use of workspaces is really usefull, I often have dozens of workspace's screens with 1 atom + 1 shell inside them.
