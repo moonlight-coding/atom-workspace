@@ -87,9 +87,6 @@ class WindowManager
     $this->screenWidth = $matches[5] + $matches[7];
     $this->screenHeight = $matches[6] + $matches[8];
     
-    
-    //var_dump($matches);
-    
     // "0  * DG: 11520x4320  VP: 0,0  WA: 65,24 1855x1056  N/A"
   }
   
@@ -103,11 +100,11 @@ class WindowManager
     
     foreach($lines as $line)
     {
-      $pattern = "^0x([\da-f]+).* — (.*) — Atom";
+      $pattern = "^0x([\da-f]+).* ([~\/].*) — Atom";
       preg_match("/" . $pattern . "/", $line, $matches);
       
       if(count($matches) > 0) {
-        
+          
         $PID = '0x' . $matches[1];
         $match_path = $matches[2];
         

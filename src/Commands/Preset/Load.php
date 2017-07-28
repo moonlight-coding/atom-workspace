@@ -39,7 +39,8 @@ class Load extends Command
       
       if($wm->findWindow($path) != null) {
         //Window on $path already opened
-      } 
+        echo "window for workspace '$path' is already opened\n";
+      }
       else {
         
         $cmd = "xterm -maximized -e 'cd $path;atom .;bash'";
@@ -58,7 +59,7 @@ class Load extends Command
       $timer = 0;
       
       do {
-        sleep(0.2);
+        usleep(200 * 1000);
         $WID = $wm->findWindow($path);
       
       /*if($WID == null) {
@@ -71,8 +72,12 @@ class Load extends Command
         
         $timer ++;
       
-      } while($WID == null && $timer < (5 * 60)); // 60 secs timeout 
+      } while($WID == null && $timer < (5 * 5)); // 5 secs timeout 
       
+      if($WID == null) {
+        echo "[!] timer expired: $timer\n";
+        exit(1);
+      }
       $wm->moveTo($preset['x'], $preset['y'], $WID);
       // 2nd move, to counter Unity (Ubuntu) bug
       sleep(0.2);

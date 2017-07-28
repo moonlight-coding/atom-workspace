@@ -49,10 +49,24 @@ class Config
     return $this->conf['presets'][$name];
   }
   
+  public function isPresetWorkspaceDefined($name, $x, $y)
+  {
+    foreach($this->conf['presets'][$name]['workspaces'] as $workspace) {
+      if($workspace['x'] == $x && $workspace['y'] == $y)
+        return true;
+    }
+    
+    return false;
+  }
+  
   public function createPresetWorkspace($name, $x, $y, $path)
   {
     if(!array_key_exists($name, $this->conf['presets'])) {
       throw new \Exception("Preset '$name' doesn't exist");
+    }
+
+    if($this->isPresetWorkspaceDefined($name, $x, $y)) {
+      throw new \Exception("This workspace $x,$y is already taken");
     }
     
     $this->conf['presets'][$name]['workspaces'][] = [
