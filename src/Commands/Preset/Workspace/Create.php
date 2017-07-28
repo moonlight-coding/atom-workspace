@@ -16,9 +16,9 @@ class Create extends Command
     $this
       ->setName('preset:workspace:create')
       ->addArgument('name', InputArgument::REQUIRED, 'The name of the preset.')
-      ->addArgument('x', InputArgument::REQUIRED, 'horizontal')
-      ->addArgument('y', InputArgument::REQUIRED, 'vertical')
-      ->addArgument('path', InputArgument::REQUIRED, 'The path of the project to open.')
+      ->addArgument('x', InputArgument::OPTIONAL, 'horizontal | default is current workspace X component')
+      ->addArgument('y', InputArgument::OPTIONAL, 'vertical | default is current workspace Y component')
+      ->addArgument('path', InputArgument::OPTIONAL, 'The path of the project to open | default is current directory')
       ->setDescription('create a preset')
     ;
   }
@@ -29,6 +29,19 @@ class Create extends Command
     $x = $input->getArgument('x');
     $y = $input->getArgument('y');
     $path = $input->getArgument('path');
+    
+    $wm = new \Services\WindowManager();
+    $wm->fetchSize();
+    
+    if($x == null) {
+      $x = $wm->getWorkspaceX();
+    }
+    if($y == null) {
+      $y = $wm->getWorkspaceY();
+    }
+    if($path == null) {
+      $path = getcwd();
+    }
     
     $config = new \Services\Config();
     $config->createPresetWorkspace($name, $x, $y, $path);

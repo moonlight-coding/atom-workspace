@@ -16,6 +16,7 @@ class Load extends Command
     $this
       ->setName('preset:load')
       ->addArgument('name', InputArgument::REQUIRED, 'The name of the preset.')
+      ->setAliases(['load'])
       ->setDescription('open the windows of this preset')
     ;
   }
@@ -72,7 +73,7 @@ class Load extends Command
         
         $timer ++;
       
-      } while($WID == null && $timer < (5 * 5)); // 5 secs timeout 
+      } while($WID == null && $timer < (5 * 20)); // 20 secs timeout 
       
       if($WID == null) {
         echo "[!] timer expired: $timer\n";

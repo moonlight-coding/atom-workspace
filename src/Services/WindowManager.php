@@ -161,4 +161,14 @@ class WindowManager
   {
     return $this->offsetY;
   }
+  
+  public function getWorkspaceX()
+  {
+    return (int) $this->vpX / $this->screenWidth;
+  }
+  
+  public function getWorkspaceY()
+  {
+    return (int) $this->vpY/ $this->screenHeight;
+  }
 }
